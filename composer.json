@@ -6,7 +6,10 @@
     "autoload": {
       "psr-4": {
         "MdhDigital\\MdhLicense\\": "src/"
-      }
+      },
+      "files": [
+        "src/Helpers/functions.php"
+      ]
     },
     "authors": [
       {

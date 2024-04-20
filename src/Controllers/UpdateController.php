@@ -1,14 +1,14 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Controllers;
+namespace MdhDigital\MdhLicense\Controllers;
 
 use Illuminate\Routing\Controller;
-use Mdhdigital\MdhLicense\Helpers\DatabaseManager;
-use Mdhdigital\MdhLicense\Helpers\InstalledFileManager;
+use MdhDigital\MdhLicense\Helpers\DatabaseManager;
+use MdhDigital\MdhLicense\Helpers\InstalledFileManager;
 
 class UpdateController extends Controller
 {
-    use \Mdhdigital\MdhLicense\Helpers\MigrationsHelper;
+    use \MdhDigital\MdhLicense\Helpers\MigrationsHelper;
 
     /**
      * Display the updater welcome page.

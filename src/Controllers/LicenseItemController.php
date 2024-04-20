@@ -1,6 +1,6 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Controllers;
+namespace MdhDigital\MdhLicense\Controllers;
 
 use App\Models\Admin\License;
 use Illuminate\Routing\Controller;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Helpers;
+namespace MdhDigital\MdhLicense\Helpers;
 
 class RequirementsChecker
 {

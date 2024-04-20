@@ -1,12 +1,13 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Providers;
+namespace MdhDigital\MdhLicense\Providers;
 
 use App\Http\Middleware\Authenticate;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Mdhdigital\MdhLicense\Middleware\DeviceMobile;
-use Mdhdigital\MdhLicense\Middleware\IsLicense; 
+use MdhDigital\MdhLicense\Middleware\canInstall;
+use MdhDigital\MdhLicense\Middleware\canUpdate;
+use MdhDigital\MdhLicense\Middleware\IsLicense; 
 
 class MdhdigitalLicenseServiceProvider extends ServiceProvider
 {
@@ -36,8 +37,9 @@ class MdhdigitalLicenseServiceProvider extends ServiceProvider
     public function boot(Router $router)
     { 
         $router->middlewareGroup('auth',[Authenticate::class]);
-        $router->middlewareGroup('is_license', [IsLicense::class]);
-        $router->middlewareGroup('device_mobile', [DeviceMobile::class]);
+        $router->middlewareGroup('is_license', [IsLicense::class]); 
+        $router->middlewareGroup('install', [canInstall::class]);
+        $router->middlewareGroup('update', [canUpdate::class]);
     }
 
     /**

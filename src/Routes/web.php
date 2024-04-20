@@ -1,24 +1,22 @@
 <?php
   
-use Illuminate\Support\Facades\Route; 
-use Mdhdigital\MdhLicense\Controllers\LicenseController;
+use Illuminate\Support\Facades\Route;  
+use MdhDigital\MdhLicense\Controllers\LicenseItemController;
+use MdhDigital\MdhLicense\Controllers\WelcomeController;
 
-Route::group(['prefix' => 'license-key', 'namespace' => 'Mdhdigital\MdhLicense\Controllers', 'middleware' => ['web', 'is_license']], function () {
-    Route::get('/', [LicenseController::class, 'welcome'])->name('license');
-    Route::get('/insert-key', [LicenseController::class, 'validation'])->name('license.validation');
-    Route::post('/store-license', [LicenseController::class, 'checkValidation'])->name('license.store');
+Route::group(['prefix' => 'license-key', 'namespace' => 'MdhDigital\MdhLicense\Controllers', 'middleware' => ['web', 'is_license']], function () {
+    Route::get('/', [LicenseItemController::class, 'welcome'])->name('license');
+    Route::get('/insert-key', [LicenseItemController::class, 'validation'])->name('license.validation');
+    Route::post('/store-license', [LicenseItemController::class, 'checkValidation'])->name('license.store');
 });
 
-Route::prefix('mdhpos-license')->middleware(['web', 'auth'])->group(function () {
-    Route::get('update', [LicenseController::class, 'updateLicense'])->name('license.update');
-    Route::post('store-update', [LicenseController::class, 'update']);
+Route::prefix('mdhpos-license')->group(function () {
+    Route::get('update', [LicenseItemController::class, 'updateLicense'])->name('license.update');
+    Route::post('store-update', [LicenseItemController::class, 'update']);
 });
 
-Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'namespace' => 'Mdhdigital\MdhLicense\Controllers', 'middleware' => ['web', 'install']], function () {
-    Route::get('/', [
-        'as' => 'welcome',
-        'uses' => 'WelcomeController@welcome',
-    ]);
+Route::group(['prefix' => 'install', 'as' => 'MdhLicense::', 'namespace' => 'MdhDigital\MdhLicense\Controllers', 'middleware' => ['web', 'install']], function () {
+    Route::get('/', [WelcomeController::class,'welcome']);
 
     Route::get('environment', [
         'as' => 'environment',
@@ -66,7 +64,7 @@ Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'namespace' =
     ]);
 });
 
-Route::group(['prefix' => 'update', 'as' => 'LaravelUpdater::', 'namespace' => 'Mdhdigital\MdhLicense\Controllers', 'middleware' => 'web'], function () {
+Route::group(['prefix' => 'update', 'as' => 'LaravelUpdater::', 'namespace' => 'MdhDigital\MdhLicense\Controllers', 'middleware' => 'web'], function () {
     Route::group(['middleware' => 'update'], function () {
         Route::get('/', [
             'as' => 'welcome',

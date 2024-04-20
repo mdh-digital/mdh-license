@@ -1,12 +1,12 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Middleware;
+namespace MdhDigital\MdhLicense\Middleware;
 
 use Closure;
 
 class canUpdate
 {
-    use \Mdhdigital\MdhLicense\Helpers\MigrationsHelper;
+    use \MdhDigital\MdhLicense\Helpers\MigrationsHelper;
 
     /**
      * Handle an incoming request.

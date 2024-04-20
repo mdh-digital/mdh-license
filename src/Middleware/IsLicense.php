@@ -1,6 +1,6 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Middleware;
+namespace MdhDigital\MdhLicense\Middleware;
 
 use App\Models\Admin\License;
 use Closure;

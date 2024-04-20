@@ -1,9 +1,9 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Controllers;
+namespace MdhDigital\MdhLicense\Controllers;
 
 use Illuminate\Routing\Controller;
-use Mdhdigital\MdhLicense\Helpers\PermissionsChecker;
+use MdhDigital\MdhLicense\Helpers\PermissionsChecker;
 
 class PermissionsController extends Controller
 {

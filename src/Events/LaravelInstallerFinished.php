@@ -1,6 +1,6 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Events;
+namespace MdhDigital\MdhLicense\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

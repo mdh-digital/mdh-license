@@ -1,15 +1,15 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Controllers;
+namespace MdhDigital\MdhLicense\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
-use Mdhdigital\MdhLicense\Events\EnvironmentSaved;
-use Mdhdigital\MdhLicense\Helpers\EnvironmentManager;
-use Validator;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
+use MdhDigital\MdhLicense\Events\EnvironmentSaved;
+use MdhDigital\MdhLicense\Helpers\EnvironmentManager; 
 
 class EnvironmentController extends Controller
 {
@@ -91,7 +91,7 @@ class EnvironmentController extends Controller
             'environment_custom.required_if' => trans('installer_messages.environment.wizard.form.name_required'),
         ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = FacadesValidator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return $redirect->route('LaravelInstaller::environmentWizard')->withInput()->withErrors($validator->errors());

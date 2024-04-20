@@ -1,9 +1,9 @@
 <?php
 
-namespace Mdhdigital\MdhLicense\Controllers;
+namespace MdhDigital\MdhLicense\Controllers;
 
 use Illuminate\Routing\Controller;
-use Mdhdigital\MdhLicense\Helpers\DatabaseManager;
+use MdhDigital\MdhLicense\Helpers\DatabaseManager;
 
 class DatabaseController extends Controller
 {
