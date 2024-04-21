@@ -92,6 +92,7 @@ class EnvironmentManager
      */
     public function saveFileWizard(Request $request)
     {
+        
         $results = trans('installer_messages.environment.success');
 
         $envFileData =
@@ -120,6 +121,8 @@ class EnvironmentManager
         'MAIL_USERNAME='.$request->mail_username."\n".
         'MAIL_PASSWORD='.$request->mail_password."\n".
         'MAIL_ENCRYPTION='.$request->mail_encryption."\n\n".
+        'PURCHASE_CODE='.session()->get('storage_license')."\n\n".
+        'PURCHASE_USERNAME='.session()->get('storage_username')."\n\n".
         'PUSHER_APP_ID='.$request->pusher_app_id."\n".
         'PUSHER_APP_KEY='.$request->pusher_app_key."\n".
         'PUSHER_APP_SECRET='.$request->pusher_app_secret;

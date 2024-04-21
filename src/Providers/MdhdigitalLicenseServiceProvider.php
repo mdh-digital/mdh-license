@@ -6,6 +6,7 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use MdhDigital\MdhLicense\Middleware\canInstall;
+use MdhDigital\MdhLicense\Middleware\canNext;
 use MdhDigital\MdhLicense\Middleware\canUpdate;
 use MdhDigital\MdhLicense\Middleware\IsLicense; 
 
@@ -40,6 +41,7 @@ class MdhdigitalLicenseServiceProvider extends ServiceProvider
         $router->middlewareGroup('is_license', [IsLicense::class]); 
         $router->middlewareGroup('install', [canInstall::class]);
         $router->middlewareGroup('update', [canUpdate::class]);
+        $router->middlewareGroup('nextinstall', [canNext::class]);
     }
 
     /**

@@ -1,12 +1,11 @@
 <?php
 
 namespace MdhDigital\MdhLicense\Middleware;
-
-use App\Models\Admin\License;
+ 
 use Closure;
 use Illuminate\Http\Request;
 
-class IsLicense
+class canNext
 {
     /**
      * Handle an incoming request.
@@ -17,10 +16,11 @@ class IsLicense
      */
     public function handle(Request $request, Closure $next)
     {
-        $getLicense = License::first();
-        if($getLicense == null) {
+        $getSession = session()->get('storage_license');
+        if($getSession != null) {
             return $next($request);
         }
-        return redirect()->route('authentication');
+       
+        return redirect()->route('MdhLicense::license');
     }
 }

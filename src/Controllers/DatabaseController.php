@@ -2,8 +2,10 @@
 
 namespace MdhDigital\MdhLicense\Controllers;
 
+use App\Models\Admin\License;
 use Illuminate\Routing\Controller;
 use MdhDigital\MdhLicense\Helpers\DatabaseManager;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class DatabaseController extends Controller
 {
@@ -29,7 +31,7 @@ class DatabaseController extends Controller
     {
         $response = $this->databaseManager->migrateAndSeed();
 
-        return redirect()->route('LaravelInstaller::final')
+        return redirect()->route('MdhLicense::final')
                          ->with(['message' => $response]);
     }
 }

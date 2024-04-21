@@ -2,11 +2,13 @@
 
 namespace MdhDigital\MdhLicense\Controllers;
 
+use App\Models\Admin\License;
 use Illuminate\Routing\Controller;
-use MdhDigital\MdhLicense\Events\LaravelInstallerFinished;
+use MdhDigital\MdhLicense\Events\MdhLicenseFinished;
 use MdhDigital\MdhLicense\Helpers\EnvironmentManager;
 use MdhDigital\MdhLicense\Helpers\FinalInstallManager;
 use MdhDigital\MdhLicense\Helpers\InstalledFileManager;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class FinalController extends Controller
 {
@@ -21,10 +23,25 @@ class FinalController extends Controller
     public function finish(InstalledFileManager $fileManager, FinalInstallManager $finalInstall, EnvironmentManager $environment)
     {
         $finalMessages = $finalInstall->runFinal();
-        $finalStatusMessage = $fileManager->update();
-        $finalEnvFile = $environment->getEnvContent();
 
-        event(new LaravelInstallerFinished);
+        $deviceName     = getHostName();
+        $domain         = substr(FacadesRequest::root(), 7);       
+
+        $finalStatusMessage = $fileManager->update(); 
+        $finalEnvFile       = $environment->getEnvContent();
+
+        event(new MdhLicenseFinished);
+
+        $license =  License::create([
+            'name'          => env('PURCHASE_USERNAME'),
+            'email'         => env('PURCHASE_USERNAME'),
+            'purchase'      => env('PURCHASE_CODE'),
+            'ip_or_domain'  => $domain,
+            'type'          => 'online'
+        ]);
+
+        session()->put('license_activation', $license->purchase);
+        session()->put('username_activation', $license->name);
 
         return view('vendor.installer.finished', compact('finalMessages', 'finalStatusMessage', 'finalEnvFile'));
     }

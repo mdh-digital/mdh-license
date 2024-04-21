@@ -2,9 +2,9 @@
 
 namespace MdhDigital\MdhLicense\Controllers;
 
-use App\Models\Admin\License; 
+use App\Models\Admin\License;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Request as FacadesRequest; 
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 trait ItemPurchase
 {
@@ -28,22 +28,20 @@ trait ItemPurchase
         $domain             = substr(FacadesRequest::root(), 7);
 
         $response       = Http::withHeaders([
-            'Accept' => 'application/json', 
-        ])->post('https://pasarsafe.com/api/open/get-credential', [
-                'purchase'      => $getLicense->purchase,
-                'email'         => $getLicense->email,
-                'domain'        => $domain,
-                'device'        => $deviceName
+            'Accept' => 'application/json',
+        ])->post('https://pasarsafe.com/api/codecanyon/purchase-code', [
+            'code'          => $getLicense->purchase,
+            'username'      => $getLicense->email,
+            'domain'        => $domain,
+            'device'        => $deviceName
         ]);
 
-        $hasil = json_decode($response->body());
-
-        if ($hasil->status == 'error') {
+        $callback = json_decode($response->body());
+ 
+        if ($callback->status == 200) { 
+            return $getLicense->purchase;
+        } else {
             return false;
-        }
-
-        if ($hasil->status == 'success') {
-            return $hasil->token;
         }
     }
 }
