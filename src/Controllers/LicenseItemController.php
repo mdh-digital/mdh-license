@@ -25,7 +25,7 @@ class LicenseItemController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'purchase'      => 'required',
-            'username'      => 'required',
+            'email'         => 'required|email',
         ]);
 
         if ($validator->fails()) {
@@ -41,10 +41,11 @@ class LicenseItemController extends Controller
         $domain         = substr(FacadesRequest::root(), 7);
 
         $toServer =  Http::withHeaders([
-            'businessId'    => 'pasarsafedepartment',
-        ])->post('https://pasarsafe.com/api/codecanyon/purchase-code', [
-            'code'          => $request->purchase,
-            'username'      => $request->username,
+            'businessId'    => 'pasarsafeproduct',
+        ])->post('https://product.mdh-digital.com/api/license/checking', [
+            'purchase'      => $request->purchase,
+            'email'         => $request->email,
+            'product'       => 'salespos_web',
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
@@ -52,11 +53,10 @@ class LicenseItemController extends Controller
         $callback   = json_decode($toServer->body());
 
         if ($callback->status == 200) {
-            $newlicense = new License();
-            $newlicense->name           = $request->username;
+            $newlicense = new License(); 
             $newlicense->purchase       = $request->purchase;
             $newlicense->email          = $request->email;
-            $newlicense->ip_or_domain   = $request->domain;
+            $newlicense->ip_or_domain   = $domain;
             $newlicense->save();
 
             return response()->json([
@@ -65,7 +65,7 @@ class LicenseItemController extends Controller
             ]);
         } else {
             return response()->json([
-                'pesan'     => $callback->response->description ?? '-',
+                'pesan'     => $callback->message ?? '-',
                 'status'    => 'error'
             ]);
         }
@@ -82,7 +82,7 @@ class LicenseItemController extends Controller
 
         $validator = Validator::make($request->all(), [
             'purchase'      => 'required',
-            'username'      => 'required',
+            'email'         => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -98,10 +98,11 @@ class LicenseItemController extends Controller
         $domain         = substr(FacadesRequest::root(), 7);
 
         $toServer =  Http::withHeaders([
-            'businessId'    => 'pasarsafedepartment',
-        ])->post('https://pasarsafe.com/api/codecanyon/purchase-code', [
-            'code'          => $request->purchase,
-            'username'      => $request->username,
+            'businessId'    => 'pasarsafeproduct',
+        ])->post('https://product.mdh-digital.com/api/license/checking', [
+            'purchase'      => $request->purchase,
+            'email'         => $request->email,
+            'product'       => 'salespos_web',
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
@@ -110,10 +111,9 @@ class LicenseItemController extends Controller
 
         if ($callback->status == 200) {
             $newlicense = License::first();
-            $newlicense->name = $request->username;
-            $newlicense->purchase = $request->purchase;
-            $newlicense->email = $request->username;
-            $newlicense->ip_or_domain = $domain;
+            $newlicense->purchase       = $request->purchase;
+            $newlicense->email          = $request->email;
+            $newlicense->ip_or_domain   = $domain;
             $newlicense->save();
 
             return response()->json([
@@ -122,7 +122,7 @@ class LicenseItemController extends Controller
             ]);
         } else {
             return response()->json([
-                'pesan'     => $callback->response->description ?? '-',
+                'pesan'     => $callback->message ?? '-',
                 'status'    => 'error'
             ]);
         }

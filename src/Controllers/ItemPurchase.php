@@ -28,18 +28,20 @@ trait ItemPurchase
         $domain             = substr(FacadesRequest::root(), 7);
 
         $response       = Http::withHeaders([
-            'Accept' => 'application/json',
-        ])->post('https://pasarsafe.com/api/codecanyon/purchase-code', [
-            'code'          => $getLicense->purchase,
-            'username'      => $getLicense->email,
-            'domain'        => $domain,
-            'device'        => $deviceName
+            'Accept'        => 'application/json',
+            'businessId'    => 'pasarsafeproduct',
+        ])->post('https://product.mdh-digital.com/api/license/get-credential', [
+            'purchase'          => $getLicense->purchase,
+            'email'             => $getLicense->email,
+            'product'           => 'salespos_web',
+            'domain'            => $domain,
+            'device'            => $deviceName
         ]);
 
         $callback = json_decode($response->body());
  
         if ($callback->status == 200) { 
-            return $getLicense->purchase;
+            return $callback->token;
         } else {
             return false;
         }

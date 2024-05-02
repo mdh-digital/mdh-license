@@ -23,8 +23,8 @@ class LicenseController extends Controller
     public function savingCredencial(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'purchase'      => 'required',
-            'username'      => 'required',
+            'purchase'      => 'required|string',
+            'email'         => 'required|email',
         ]);
 
         if ($validator->fails()) {
@@ -40,25 +40,26 @@ class LicenseController extends Controller
         $domain         = substr(FacadesRequest::root(), 7); 
 
         $toServer =  Http::withHeaders([
-            'businessId'    => 'pasarsafedepartment',
-        ])->post('https://pasarsafe.com/api/codecanyon/purchase-code', [
-            'code'          => $request->purchase,
-            'username'      => $request->username,
+            'businessId'    => 'pasarsafeproduct',
+        ])->post('https://product.mdh-digital.com/api/license/checking', [
+            'purchase'      => $request->purchase,
+            'email'         => $request->email,
+            'product'       => 'salespos_web',
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
-
-        $callback   = json_decode($toServer->body());
+        
+        $callback   = json_decode($toServer->body());  
 
         if($callback->status == 200) {
           
             session()->put('storage_license',$request->purchase);
-            session()->put('storage_username',$request->username);
+            session()->put('storage_username',$request->email);
 
             return redirect()->route('MdhLicense::requirements'); 
 
         } else {
-            return redirect()->back()->with(['failed' => 'Sorry, your purchase code is invalid']);
+            return redirect()->back()->with(['failed' => $callback->message]);
             
         }
     }
