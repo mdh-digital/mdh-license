@@ -1,6 +1,6 @@
 {
     "name": "mdh-digital/mdh-license",
-    "description": "Laravel Package for Manufactur digital hub ( Product Digital Department ) to protect item",
+    "description": "Laravel Package for Manufactur digital hub ( Product Digital Department ) to protect our item",
     "type": "library",
     "license": "MIT",
     "autoload": {
