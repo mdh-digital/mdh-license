@@ -5,6 +5,7 @@ namespace MdhDigital\MdhLicense\Providers;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use MdhDigital\MdhLicense\Middleware\activeSession;
 use MdhDigital\MdhLicense\Middleware\canInstall;
 use MdhDigital\MdhLicense\Middleware\canNext;
 use MdhDigital\MdhLicense\Middleware\canUpdate;
@@ -42,6 +43,7 @@ class MdhdigitalLicenseServiceProvider extends ServiceProvider
         $router->middlewareGroup('install', [canInstall::class]);
         $router->middlewareGroup('update', [canUpdate::class]);
         $router->middlewareGroup('nextinstall', [canNext::class]);
+        $router->middlewareGroup('active_session', [activeSession::class]);
     }
 
     /**

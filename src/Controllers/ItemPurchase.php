@@ -11,7 +11,7 @@ trait ItemPurchase
 
     public static function serverConnection()
     {
-        $connected = @fsockopen("pasarsafe.com", 80);
+        $connected = @fsockopen("product.mdh-digital.com", 80);
         if ($connected) {
             $is_conn = true;
             fclose($connected);
@@ -39,8 +39,9 @@ trait ItemPurchase
         ]);
 
         $callback = json_decode($response->body());
- 
-        if ($callback->status == 200) { 
+
+        if ($callback->status == 200) {
+            session()->put('active_session', $callback->token);
             return $callback->token;
         } else {
             return false;
