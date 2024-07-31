@@ -33,7 +33,7 @@ class FinalController extends Controller
         event(new MdhLicenseFinished);
 
         $license =  License::create([
-            'name'          => env('PURCHASE_USERNAME'),
+            'name'          => env('PRODUCT_TYPE'),
             'email'         => env('PURCHASE_USERNAME'),
             'purchase'      => env('PURCHASE_CODE'),
             'ip_or_domain'  => $domain,

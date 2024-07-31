@@ -44,7 +44,7 @@ class LicenseController extends Controller
         ])->post('https://product.mdh-digital.com/api/license/checking', [
             'purchase'      => $request->purchase,
             'email'         => $request->email,
-            'product'       => 'salespos_web',
+            'product'       => $request->product,
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
@@ -55,6 +55,7 @@ class LicenseController extends Controller
           
             session()->put('storage_license',$request->purchase);
             session()->put('storage_username',$request->email);
+            session()->put('product_type',$request->product);
 
             return redirect()->route('MdhLicense::requirements'); 
 

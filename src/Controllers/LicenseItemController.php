@@ -45,7 +45,7 @@ class LicenseItemController extends Controller
         ])->post('https://product.mdh-digital.com/api/license/checking', [
             'purchase'      => $request->purchase,
             'email'         => $request->email,
-            'product'       => 'salespos_web',
+            'product'       => $request->product,
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
@@ -57,6 +57,7 @@ class LicenseItemController extends Controller
             $newlicense->purchase       = $request->purchase;
             $newlicense->email          = $request->email;
             $newlicense->ip_or_domain   = $domain;
+            $newlicense->name           = $request->product;
             $newlicense->save();
 
             return response()->json([
@@ -102,7 +103,7 @@ class LicenseItemController extends Controller
         ])->post('https://product.mdh-digital.com/api/license/checking', [
             'purchase'      => $request->purchase,
             'email'         => $request->email,
-            'product'       => 'salespos_web',
+            'product'       => $request->product,
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
@@ -114,6 +115,7 @@ class LicenseItemController extends Controller
             $newlicense->purchase       = $request->purchase;
             $newlicense->email          = $request->email;
             $newlicense->ip_or_domain   = $domain;
+            $newlicense->name           = $request->product;
             $newlicense->save();
 
             return response()->json([

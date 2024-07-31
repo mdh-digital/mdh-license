@@ -123,6 +123,7 @@ class EnvironmentManager
         'MAIL_ENCRYPTION='.$request->mail_encryption."\n\n".
         'PURCHASE_CODE='.session()->get('storage_license')."\n\n".
         'PURCHASE_USERNAME='.session()->get('storage_username')."\n\n".
+        'PRODUCT_TYPE='.session()->get('product_type')."\n\n".
         'PUSHER_APP_ID='.$request->pusher_app_id."\n".
         'PUSHER_APP_KEY='.$request->pusher_app_key."\n".
         'PUSHER_APP_SECRET='.$request->pusher_app_secret;
