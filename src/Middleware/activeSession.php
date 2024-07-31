@@ -43,7 +43,7 @@ class activeSession
                 session()->put('active_session', $callback->token);
                 return $next($request);
             } else {
-                return redirect('/license-key');
+                return redirect()->route('license.update');
             }
         }
     }
