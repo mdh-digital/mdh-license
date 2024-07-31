@@ -33,7 +33,7 @@ trait ItemPurchase
         ])->post('https://product.mdh-digital.com/api/license/get-credential', [
             'purchase'          => $getLicense->purchase,
             'email'             => $getLicense->email,
-            'product'           => $getLicense->product,
+            'product'           => $getLicense->name,
             'domain'            => $domain,
             'device'            => $deviceName
         ]);
