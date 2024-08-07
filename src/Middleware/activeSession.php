@@ -19,6 +19,18 @@ class activeSession
      */
     public function handle($request, Closure $next)
     {
+
+        $connected  = @fsockopen("mdh-digital.com", 80);
+        $is_conn    = false;
+        if ($connected) {
+            $is_conn = true; 
+            fclose($connected);
+        }  
+
+        if(!$is_conn) {
+            return $next($request);
+        }
+        
         if (session()->get('active_session') != null) {
             return $next($request);
         } else {
