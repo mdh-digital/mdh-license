@@ -25,9 +25,9 @@ class FinalController extends Controller
         $finalMessages = $finalInstall->runFinal();
 
         $deviceName     = getHostName();
-        $domain         = substr(FacadesRequest::root(), 7);       
+        $domain         = substr(FacadesRequest::root(), 7);
 
-        $finalStatusMessage = $fileManager->update(); 
+        $finalStatusMessage = $fileManager->update();
         $finalEnvFile       = $environment->getEnvContent();
 
         event(new MdhLicenseFinished);
@@ -36,6 +36,8 @@ class FinalController extends Controller
             'name'          => env('PRODUCT_TYPE'),
             'email'         => env('PURCHASE_USERNAME'),
             'purchase'      => env('PURCHASE_CODE'),
+            'version_name'  => env('VERSION_NAME'),
+            'version_code'  => env('VERSION_CODE'),
             'ip_or_domain'  => $domain,
             'type'          => 'online'
         ]);
