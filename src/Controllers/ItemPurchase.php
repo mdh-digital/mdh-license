@@ -11,7 +11,7 @@ trait ItemPurchase
 
     public static function serverConnection()
     {
-        $connected = @fsockopen("product.mdh-digital.com", 80);
+        $connected = @fsockopen("whatsmail.org", 80);
         if ($connected) {
             $is_conn = true;
             fclose($connected);
@@ -29,8 +29,8 @@ trait ItemPurchase
 
         $response       = Http::withHeaders([
             'Accept'        => 'application/json',
-            'businessId'    => 'pasarsafeproduct',
-        ])->post('https://product.mdh-digital.com/api/license/get-credential', [
+            'businessId'    => 'whatsmailorganisation',
+        ])->post('https://whatsmail.org/api/license/get-credential', [
             'purchase'          => $getLicense->purchase,
             'email'             => $getLicense->email,
             'product'           => $getLicense->name,

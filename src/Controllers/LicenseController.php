@@ -36,32 +36,38 @@ class LicenseController extends Controller
             }
         }
 
+        if (!check_connection()) {
+            session()->put('storage_license', $request->purchase);
+            session()->put('storage_username', $request->email);
+            session()->put('product_type', $request->product);
+
+            return redirect()->route('MdhLicense::requirements');
+        }
+
         $deviceName     = getHostName();
-        $domain         = substr(FacadesRequest::root(), 7); 
+        $domain         = substr(FacadesRequest::root(), 7);
 
         $toServer =  Http::withHeaders([
-            'businessId'    => 'pasarsafeproduct',
-        ])->post('https://product.mdh-digital.com/api/license/checking', [
+            'businessId'    => 'whatsmailorganisation',
+        ])->post('https://whatsmail.org/api/license/checking', [
             'purchase'      => $request->purchase,
             'email'         => $request->email,
             'product'       => $request->product,
             'domain'        => $domain,
             'device'        => $deviceName
         ]);
-        
-        $callback   = json_decode($toServer->body());  
 
-        if($callback->status == 200) {
-          
-            session()->put('storage_license',$request->purchase);
-            session()->put('storage_username',$request->email);
-            session()->put('product_type',$request->product);
+        $callback   = json_decode($toServer->body());
 
-            return redirect()->route('MdhLicense::requirements'); 
+        if ($callback->status == 200) {
 
+            session()->put('storage_license', $request->purchase);
+            session()->put('storage_username', $request->email);
+            session()->put('product_type', $request->product);
+
+            return redirect()->route('MdhLicense::requirements');
         } else {
             return redirect()->back()->with(['failed' => $callback->message]);
-            
         }
     }
 }

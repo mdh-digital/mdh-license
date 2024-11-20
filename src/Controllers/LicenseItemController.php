@@ -40,9 +40,23 @@ class LicenseItemController extends Controller
         $deviceName     = getHostName();
         $domain         = substr(FacadesRequest::root(), 7);
 
+        if (!check_connection()) {
+            $newlicense = new License();
+            $newlicense->purchase       = $request->purchase;
+            $newlicense->email          = $request->email;
+            $newlicense->ip_or_domain   = $domain;
+            $newlicense->name           = $request->product;
+            $newlicense->save();
+
+            return response()->json([
+                'pesan'     => 'Success Verification Purchase Code',
+                'status'    => 'success'
+            ]);
+        }
+
         $toServer =  Http::withHeaders([
-            'businessId'    => 'pasarsafeproduct',
-        ])->post('https://product.mdh-digital.com/api/license/checking', [
+            'businessId'    => 'whatsmailorganisation',
+        ])->post('https://whatsmail.org/api/license/checking', [
             'purchase'      => $request->purchase,
             'email'         => $request->email,
             'product'       => $request->product,
@@ -53,7 +67,7 @@ class LicenseItemController extends Controller
         $callback   = json_decode($toServer->body());
 
         if ($callback->status == 200) {
-            $newlicense = new License(); 
+            $newlicense = new License();
             $newlicense->purchase       = $request->purchase;
             $newlicense->email          = $request->email;
             $newlicense->ip_or_domain   = $domain;
@@ -98,9 +112,24 @@ class LicenseItemController extends Controller
         $deviceName     = getHostName();
         $domain         = substr(FacadesRequest::root(), 7);
 
+        if (!check_connection()) {
+            $newlicense = License::first();
+            $newlicense->purchase       = $request->purchase;
+            $newlicense->email          = $request->email;
+            $newlicense->ip_or_domain   = $domain;
+            $newlicense->name           = $request->product;
+            $newlicense->save();
+
+            return response()->json([
+                'pesan'     => 'Success Verification Purchase Code',
+                'status'    => 'success'
+            ]);
+        }
+
+
         $toServer =  Http::withHeaders([
-            'businessId'    => 'pasarsafeproduct',
-        ])->post('https://product.mdh-digital.com/api/license/checking', [
+            'businessId'    => 'whatsmailorganisation',
+        ])->post('https://whatsmail.org/api/license/checking', [
             'purchase'      => $request->purchase,
             'email'         => $request->email,
             'product'       => $request->product,

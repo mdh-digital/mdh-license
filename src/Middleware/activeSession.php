@@ -20,17 +20,10 @@ class activeSession
     public function handle($request, Closure $next)
     {
 
-        $connected  = @fsockopen("mdh-digital.com", 80);
-        $is_conn    = false;
-        if ($connected) {
-            $is_conn = true; 
-            fclose($connected);
-        }  
-
-        if(!$is_conn) {
+        if (!check_connection()) {
             return $next($request);
         }
-        
+
         if (session()->get('active_session') != null) {
             return $next($request);
         } else {
@@ -41,7 +34,7 @@ class activeSession
             $response       = Http::withHeaders([
                 'Accept'        => 'application/json',
                 'businessId'    => 'pasarsafeproduct',
-            ])->post('https://product.mdh-digital.com/api/license/get-credential', [
+            ])->post(license_url() . '/api/license/get-credential', [
                 'purchase'          => $getLicense->purchase,
                 'email'             => $getLicense->email,
                 'product'           => $getLicense->name,
