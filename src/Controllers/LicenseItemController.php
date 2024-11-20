@@ -67,12 +67,14 @@ class LicenseItemController extends Controller
         $callback   = json_decode($toServer->body());
 
         if ($callback->status == 200) {
-            $newlicense = new License();
-            $newlicense->purchase       = $request->purchase;
-            $newlicense->email          = $request->email;
-            $newlicense->ip_or_domain   = $domain;
-            $newlicense->name           = $request->product;
-            $newlicense->save();
+            License::create([
+                'purchase'      => $request->purchase,
+                'email'         => $request->email,
+                'ip_or_domain'  => $domain,
+                'name'          => $request->product,
+                'version_name'  => env('VERSION_NAME'),
+                'version_code'  => env('VERSION_CODE')
+            ]);
 
             return response()->json([
                 'pesan'     => 'Success Verification Purchase Code',
@@ -113,12 +115,13 @@ class LicenseItemController extends Controller
         $domain         = substr(FacadesRequest::root(), 7);
 
         if (!check_connection()) {
-            $newlicense = License::first();
-            $newlicense->purchase       = $request->purchase;
-            $newlicense->email          = $request->email;
-            $newlicense->ip_or_domain   = $domain;
-            $newlicense->name           = $request->product;
-            $newlicense->save();
+
+            License::first()->update([
+                'purchase'      => $request->purchase,
+                'email'         => $request->email,
+                'ip_or_domain'  => $domain,
+                'name'          => $request->product
+            ]);
 
             return response()->json([
                 'pesan'     => 'Success Verification Purchase Code',
@@ -140,12 +143,14 @@ class LicenseItemController extends Controller
         $callback   = json_decode($toServer->body());
 
         if ($callback->status == 200) {
-            $newlicense = License::first();
-            $newlicense->purchase       = $request->purchase;
-            $newlicense->email          = $request->email;
-            $newlicense->ip_or_domain   = $domain;
-            $newlicense->name           = $request->product;
-            $newlicense->save();
+
+            License::first()->update([
+                'purchase'      => $request->purchase,
+                'email'         => $request->email,
+                'ip_or_domain'  => $domain,
+                'name'          => $request->product
+            ]);
+
 
             return response()->json([
                 'pesan'     => 'Success Verification Purchase Code',

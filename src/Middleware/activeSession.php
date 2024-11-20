@@ -33,7 +33,7 @@ class activeSession
 
             $response       = Http::withHeaders([
                 'Accept'        => 'application/json',
-                'businessId'    => 'pasarsafeproduct',
+                'businessId'    => 'whatsmailorganisation',
             ])->post(license_url() . '/api/license/get-credential', [
                 'purchase'          => $getLicense->purchase,
                 'email'             => $getLicense->email,
